@@ -14,6 +14,9 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppAppDashboardRouteImport } from './routes/_app.app.dashboard'
 import { Route as AppAppStudentsIndexRouteImport } from './routes/_app.app.students.index'
+import { Route as AppAppStudentsNewRouteImport } from './routes/_app.app.students.new'
+import { Route as AppAppStudentsIdRouteImport } from './routes/_app.app.students.$id'
+import { Route as AppAppStudentsIdEditRouteImport } from './routes/_app.app.students.$id.edit'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -39,18 +42,39 @@ const AppAppStudentsIndexRoute = AppAppStudentsIndexRouteImport.update({
   path: '/app/students/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAppStudentsNewRoute = AppAppStudentsNewRouteImport.update({
+  id: '/app/students/new',
+  path: '/app/students/new',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAppStudentsIdRoute = AppAppStudentsIdRouteImport.update({
+  id: '/app/students/$id',
+  path: '/app/students/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAppStudentsIdEditRoute = AppAppStudentsIdEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => AppAppStudentsIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/app/dashboard': typeof AppAppDashboardRoute
+  '/app/students/$id': typeof AppAppStudentsIdRouteWithChildren
+  '/app/students/new': typeof AppAppStudentsNewRoute
   '/app/students/': typeof AppAppStudentsIndexRoute
+  '/app/students/$id/edit': typeof AppAppStudentsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/app/dashboard': typeof AppAppDashboardRoute
+  '/app/students/$id': typeof AppAppStudentsIdRouteWithChildren
+  '/app/students/new': typeof AppAppStudentsNewRoute
   '/app/students': typeof AppAppStudentsIndexRoute
+  '/app/students/$id/edit': typeof AppAppStudentsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -58,20 +82,40 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/_app/app/dashboard': typeof AppAppDashboardRoute
+  '/_app/app/students/$id': typeof AppAppStudentsIdRouteWithChildren
+  '/_app/app/students/new': typeof AppAppStudentsNewRoute
   '/_app/app/students/': typeof AppAppStudentsIndexRoute
+  '/_app/app/students/$id/edit': typeof AppAppStudentsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/app/dashboard' | '/app/students/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/app/dashboard'
+    | '/app/students/$id'
+    | '/app/students/new'
+    | '/app/students/'
+    | '/app/students/$id/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/app/dashboard' | '/app/students'
+  to:
+    | '/'
+    | '/login'
+    | '/app/dashboard'
+    | '/app/students/$id'
+    | '/app/students/new'
+    | '/app/students'
+    | '/app/students/$id/edit'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/login'
     | '/_app/app/dashboard'
+    | '/_app/app/students/$id'
+    | '/_app/app/students/new'
     | '/_app/app/students/'
+    | '/_app/app/students/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,16 +161,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppStudentsIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/app/students/new': {
+      id: '/_app/app/students/new'
+      path: '/app/students/new'
+      fullPath: '/app/students/new'
+      preLoaderRoute: typeof AppAppStudentsNewRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/app/students/$id': {
+      id: '/_app/app/students/$id'
+      path: '/app/students/$id'
+      fullPath: '/app/students/$id'
+      preLoaderRoute: typeof AppAppStudentsIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/app/students/$id/edit': {
+      id: '/_app/app/students/$id/edit'
+      path: '/edit'
+      fullPath: '/app/students/$id/edit'
+      preLoaderRoute: typeof AppAppStudentsIdEditRouteImport
+      parentRoute: typeof AppAppStudentsIdRoute
+    }
   }
 }
 
+interface AppAppStudentsIdRouteChildren {
+  AppAppStudentsIdEditRoute: typeof AppAppStudentsIdEditRoute
+}
+
+const AppAppStudentsIdRouteChildren: AppAppStudentsIdRouteChildren = {
+  AppAppStudentsIdEditRoute: AppAppStudentsIdEditRoute,
+}
+
+const AppAppStudentsIdRouteWithChildren =
+  AppAppStudentsIdRoute._addFileChildren(AppAppStudentsIdRouteChildren)
+
 interface AppRouteChildren {
   AppAppDashboardRoute: typeof AppAppDashboardRoute
+  AppAppStudentsIdRoute: typeof AppAppStudentsIdRouteWithChildren
+  AppAppStudentsNewRoute: typeof AppAppStudentsNewRoute
   AppAppStudentsIndexRoute: typeof AppAppStudentsIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppAppDashboardRoute: AppAppDashboardRoute,
+  AppAppStudentsIdRoute: AppAppStudentsIdRouteWithChildren,
+  AppAppStudentsNewRoute: AppAppStudentsNewRoute,
   AppAppStudentsIndexRoute: AppAppStudentsIndexRoute,
 }
 
@@ -140,3 +220,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
