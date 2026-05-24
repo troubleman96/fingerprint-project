@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "finger print project" },
+      { name: "description", content: "Project Deep Dive is a web application that allows users to explore and interact with content from Markdown files." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "finger print project" },
+      { property: "og:description", content: "Project Deep Dive is a web application that allows users to explore and interact with content from Markdown files." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "finger print project" },
+      { name: "twitter:description", content: "Project Deep Dive is a web application that allows users to explore and interact with content from Markdown files." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d3931d32-a0ba-4331-af2c-8737710ed5eb/id-preview-7a66e8e6--36ec960b-426b-4c90-867f-a7ff15175347.lovable.app-1779600928854.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d3931d32-a0ba-4331-af2c-8737710ed5eb/id-preview-7a66e8e6--36ec960b-426b-4c90-867f-a7ff15175347.lovable.app-1779600928854.png" },
     ],
     links: [
       {
