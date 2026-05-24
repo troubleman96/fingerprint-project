@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppAppReportsRouteImport } from './routes/_app.app.reports'
 import { Route as AppAppDashboardRouteImport } from './routes/_app.app.dashboard'
+import { Route as AppAppAuditRouteImport } from './routes/_app.app.audit'
 import { Route as AppAppStudentsIndexRouteImport } from './routes/_app.app.students.index'
 import { Route as AppAppCasesIndexRouteImport } from './routes/_app.app.cases.index'
 import { Route as AppAppBiometricIndexRouteImport } from './routes/_app.app.biometric.index'
@@ -47,6 +48,11 @@ const AppAppReportsRoute = AppAppReportsRouteImport.update({
 const AppAppDashboardRoute = AppAppDashboardRouteImport.update({
   id: '/app/dashboard',
   path: '/app/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAppAuditRoute = AppAppAuditRouteImport.update({
+  id: '/app/audit',
+  path: '/app/audit',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAppStudentsIndexRoute = AppAppStudentsIndexRouteImport.update({
@@ -103,6 +109,7 @@ const AppAppCasesIdEditRoute = AppAppCasesIdEditRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/app/audit': typeof AppAppAuditRoute
   '/app/dashboard': typeof AppAppDashboardRoute
   '/app/reports': typeof AppAppReportsRoute
   '/app/biometric/enroll': typeof AppAppBiometricEnrollRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/app/audit': typeof AppAppAuditRoute
   '/app/dashboard': typeof AppAppDashboardRoute
   '/app/reports': typeof AppAppReportsRoute
   '/app/biometric/enroll': typeof AppAppBiometricEnrollRoute
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
+  '/_app/app/audit': typeof AppAppAuditRoute
   '/_app/app/dashboard': typeof AppAppDashboardRoute
   '/_app/app/reports': typeof AppAppReportsRoute
   '/_app/app/biometric/enroll': typeof AppAppBiometricEnrollRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
+    | '/app/audit'
     | '/app/dashboard'
     | '/app/reports'
     | '/app/biometric/enroll'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/app/audit'
     | '/app/dashboard'
     | '/app/reports'
     | '/app/biometric/enroll'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/login'
+    | '/_app/app/audit'
     | '/_app/app/dashboard'
     | '/_app/app/reports'
     | '/_app/app/biometric/enroll'
@@ -243,6 +255,13 @@ declare module '@tanstack/react-router' {
       path: '/app/dashboard'
       fullPath: '/app/dashboard'
       preLoaderRoute: typeof AppAppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/app/audit': {
+      id: '/_app/app/audit'
+      path: '/app/audit'
+      fullPath: '/app/audit'
+      preLoaderRoute: typeof AppAppAuditRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/app/students/': {
@@ -342,6 +361,7 @@ const AppAppStudentsIdRouteWithChildren =
   AppAppStudentsIdRoute._addFileChildren(AppAppStudentsIdRouteChildren)
 
 interface AppRouteChildren {
+  AppAppAuditRoute: typeof AppAppAuditRoute
   AppAppDashboardRoute: typeof AppAppDashboardRoute
   AppAppReportsRoute: typeof AppAppReportsRoute
   AppAppBiometricEnrollRoute: typeof AppAppBiometricEnrollRoute
@@ -355,6 +375,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAppAuditRoute: AppAppAuditRoute,
   AppAppDashboardRoute: AppAppDashboardRoute,
   AppAppReportsRoute: AppAppReportsRoute,
   AppAppBiometricEnrollRoute: AppAppBiometricEnrollRoute,
