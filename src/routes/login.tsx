@@ -43,14 +43,14 @@ function LoginPage() {
         </div>
         <div className="space-y-6">
           <h1 className="text-4xl font-bold leading-tight">Secure Student Disciplinary Management</h1>
-          <p className="text-white/80">Biometric-backed, immutable, role-based — built for higher learning institutions.</p>
+          <p className="text-white/80">Biometric-backed, role-based case management for secure academic operations.</p>
           <ul className="space-y-3">
             {["Biometric fingerprint authentication", "Role-based access control", "Immutable audit trail"].map((t) => (
               <li key={t} className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-300" /> {t}</li>
             ))}
           </ul>
         </div>
-        <p className="text-sm text-white/60">Dar es Salaam Institute of Technology</p>
+        <p className="text-sm text-white/60">Demo environment</p>
       </div>
       <div className="relative flex flex-1 items-center justify-center p-6">
         <Button variant="ghost" size="icon" className="absolute right-4 top-4" onClick={toggleTheme}>
@@ -99,7 +99,7 @@ function LoginPage() {
                   navigate({ to: "/app/dashboard" });
                 }, 600);
               }
-            }} label="Welcome, Amina" />
+            }} label="Welcome back" />
           </DialogContent>
         </Dialog>
       </div>

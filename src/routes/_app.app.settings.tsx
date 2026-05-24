@@ -70,8 +70,8 @@ function SettingsPage() {
         <TabsContent value="system" className="pt-4">
           <div className="grid max-w-xl gap-4 rounded-xl border border-border bg-card p-6">
             <h3 className="font-semibold">System Settings</h3>
-            <div><Label>Institution Name</Label><Input defaultValue="Dar es Salaam Institute of Technology" /></div>
-            <div><Label>Short Code</Label><Input defaultValue="DIT" /></div>
+            <div><Label>Institution Name</Label><Input defaultValue="DisciplineTrack Demo Workspace" /></div>
+            <div><Label>Short Code</Label><Input defaultValue="DT" /></div>
             <div><Label>Academic Year</Label><Input defaultValue="2024/2025" /></div>
             <div><Label>Max Upload (MB)</Label><Input type="number" defaultValue={5} /></div>
             <div><Label>Session Timeout (min)</Label><Input type="number" defaultValue={30} /></div>

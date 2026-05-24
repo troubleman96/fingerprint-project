@@ -36,7 +36,7 @@ function CaseCreatePage() {
   };
 
   const submit = () => {
-    toast.success(`Case #DIT-2024-0442 filed successfully`);
+    toast.success(`Case #CASE-2024-0442 filed successfully`);
     setTimeout(() => navigate({ to: "/app/cases" }), 600);
   };
 

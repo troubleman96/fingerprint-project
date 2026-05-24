@@ -3,19 +3,19 @@ import type { Student, DisciplinaryCase, User, AuditEntry, IncidentType } from "
 // Central demo dataset for the whole product. Most routes read directly from these
 // arrays today, so changing values here immediately changes the visible app state.
 export const departments = [
-  "Computer Studies",
-  "Business Administration",
-  "Civil Engineering",
-  "Electrical Engineering",
-  "Hospitality & Tourism",
+  "Academic Affairs",
+  "Student Services",
+  "Business Studies",
+  "Engineering",
+  "Campus Operations",
 ];
 
 export const users: User[] = [
-  { id: 1, email: "admin@email.com", full_name: "Amina Rashidi", role: "ADMIN", department: "IT Department", is_active: true, last_login: "2024-05-20T09:12:00Z", joined: "2022-01-10", phone: "+255 712 000 001" },
-  { id: 2, email: "officer@email.com", full_name: "Khalfan Mwarami", role: "OFFICER", department: "Student Affairs", is_active: true, last_login: "2024-05-22T14:45:00Z", joined: "2022-03-15", phone: "+255 712 000 002" },
-  { id: 3, email: "staff@email.com", full_name: "Zawadi Ally", role: "STAFF", department: "Registrar", is_active: true, last_login: "2024-05-23T08:01:00Z", joined: "2023-08-01", phone: "+255 712 000 003" },
-  { id: 4, email: "j.mhina@email.com", full_name: "Juma Mhina", role: "OFFICER", department: "Student Affairs", is_active: true, last_login: "2024-05-21T11:00:00Z", joined: "2023-02-12" },
-  { id: 5, email: "r.kessy@email.com", full_name: "Rehema Kessy", role: "STAFF", department: "Registrar", is_active: false, last_login: "2024-04-02T10:00:00Z", joined: "2022-11-09" },
+  { id: 1, email: "admin@email.com", full_name: "Admin User", role: "ADMIN", department: "Platform Operations", is_active: true, last_login: "2024-05-20T09:12:00Z", joined: "2022-01-10", phone: "+000 000 000 001" },
+  { id: 2, email: "officer@email.com", full_name: "Case Officer", role: "OFFICER", department: "Student Services", is_active: true, last_login: "2024-05-22T14:45:00Z", joined: "2022-03-15", phone: "+000 000 000 002" },
+  { id: 3, email: "staff@email.com", full_name: "Registry Staff", role: "STAFF", department: "Records Office", is_active: true, last_login: "2024-05-23T08:01:00Z", joined: "2023-08-01", phone: "+000 000 000 003" },
+  { id: 4, email: "reviewer@email.com", full_name: "Review Officer", role: "OFFICER", department: "Student Services", is_active: true, last_login: "2024-05-21T11:00:00Z", joined: "2023-02-12" },
+  { id: 5, email: "support@email.com", full_name: "Support Staff", role: "STAFF", department: "Records Office", is_active: false, last_login: "2024-04-02T10:00:00Z", joined: "2022-11-09" },
 ];
 
 export const incidentTypes: IncidentType[] = [
@@ -27,8 +27,8 @@ export const incidentTypes: IncidentType[] = [
   { id: 6, name: "Attendance Violation", default_severity: "LOW" },
 ];
 
-const fnames = ["Asha", "Baraka", "Chausiku", "Daudi", "Eliya", "Fatuma", "Gemma", "Hamisi", "Imani", "Juma", "Kito", "Lulu"];
-const lnames = ["Mwakajinga", "Nkomo", "Ochieng", "Patel", "Qassim", "Rashid", "Sanga", "Tarimo", "Ulimwengu", "Vumi", "Wanjala", "Yusuf"];
+const fnames = ["Alex", "Blake", "Cameron", "Devon", "Emery", "Finley", "Harper", "Jordan", "Kai", "Logan", "Morgan", "Parker"];
+const lnames = ["Stone", "Reed", "Brooks", "Hayes", "Quinn", "Lane", "Perry", "Cole", "Shaw", "Rowe", "Ellis", "Dean"];
 
 // Seed a compact student dataset with enough variation to exercise list filters,
 // detail pages, biometric status badges, and repeat-offender reporting.
@@ -44,8 +44,8 @@ export const students: Student[] = Array.from({ length: 12 }, (_, i) => ({
   is_active: i !== 7,
   case_count: [0, 1, 0, 3, 2, 0, 1, 4, 0, 2, 1, 0][i],
   created_at: `2024-0${(i % 9) + 1}-${10 + (i % 18)}`,
-  gender: i % 2 === 0 ? "Female" : "Male",
-  phone: `+255 75${i} 000 ${100 + i}`,
+  gender: i % 2 === 0 ? "Group A" : "Group B",
+  phone: `+000 000 000 ${100 + i}`,
   email: `${fnames[i].toLowerCase()}.${lnames[i].toLowerCase()}@email.com`,
 }));
 
@@ -59,7 +59,7 @@ export const cases: DisciplinaryCase[] = Array.from({ length: 15 }, (_, i) => {
   const status = statuses[i % statuses.length];
   return {
     id: i + 1,
-    case_number: `DIT-2024-${String(440 + i).padStart(4, "0")}`,
+    case_number: `CASE-2024-${String(440 + i).padStart(4, "0")}`,
     student_id: (i % students.length) + 1,
     incident_type: incidentTypes[i % incidentTypes.length].name,
     severity: severities[i % 3],
@@ -83,8 +83,8 @@ export const auditLog: AuditEntry[] = Array.from({ length: 20 }, (_, i) => {
     action,
     description: `${action.replace("_", " ").toLowerCase()} performed on resource`,
     resource_type: action.startsWith("CASE") ? "DisciplinaryCase" : action.startsWith("STUDENT") ? "Student" : action.startsWith("USER") ? "User" : "System",
-    resource_id: `DIT-2024-${String(440 + i).padStart(4, "0")}`,
-    ip_address: `192.168.1.${10 + i}`,
+    resource_id: `CASE-2024-${String(440 + i).padStart(4, "0")}`,
+    ip_address: `198.51.100.${10 + i}`,
     timestamp: `2024-05-${String(20 - (i % 20)).padStart(2, "0")}T${String(8 + (i % 12)).padStart(2, "0")}:${String((i * 7) % 60).padStart(2, "0")}:00Z`,
   };
 });

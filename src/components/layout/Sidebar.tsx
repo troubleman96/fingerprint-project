@@ -31,7 +31,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         </div>
         <div>
           <p className="text-sm font-bold leading-tight">DisciplineTrack</p>
-          <p className="text-[10px] uppercase tracking-wide opacity-60">DIT</p>
+          <p className="text-[10px] uppercase tracking-wide opacity-60">DT</p>
         </div>
       </div>
 

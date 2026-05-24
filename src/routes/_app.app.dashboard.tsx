@@ -80,10 +80,10 @@ function DashboardPage() {
             </div>
             <ul className="space-y-3 text-sm">
               {[
-                { c: "bg-red-500", t: "Khalfan M.", a: "escalated case #DIT-2024-0441", w: "2 min ago" },
-                { c: "bg-emerald-500", t: "Amina R.", a: "resolved case #DIT-2024-0438", w: "1 hr ago" },
-                { c: "bg-blue-500", t: "Zawadi A.", a: "enrolled biometric for student", w: "3 hr ago" },
-                { c: "bg-amber-500", t: "Juma M.", a: "filed new case #DIT-2024-0442", w: "5 hr ago" },
+                { c: "bg-red-500", t: "Case Officer", a: "escalated case #CASE-2024-0441", w: "2 min ago" },
+                { c: "bg-emerald-500", t: "Admin User", a: "resolved case #CASE-2024-0438", w: "1 hr ago" },
+                { c: "bg-blue-500", t: "Registry Staff", a: "enrolled biometric for student", w: "3 hr ago" },
+                { c: "bg-amber-500", t: "Review Officer", a: "filed new case #CASE-2024-0442", w: "5 hr ago" },
                 { c: "bg-violet-500", t: "System", a: "exported monthly report", w: "yesterday" },
               ].map((x, i) => (
                 <li key={i} className="flex items-start gap-2">
