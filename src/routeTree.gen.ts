@@ -20,6 +20,7 @@ import { Route as AppAppStudentsIdRouteImport } from './routes/_app.app.students
 import { Route as AppAppCasesNewRouteImport } from './routes/_app.app.cases.new'
 import { Route as AppAppCasesIdRouteImport } from './routes/_app.app.cases.$id'
 import { Route as AppAppStudentsIdEditRouteImport } from './routes/_app.app.students.$id.edit'
+import { Route as AppAppCasesIdEditRouteImport } from './routes/_app.app.cases.$id.edit'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -75,29 +76,36 @@ const AppAppStudentsIdEditRoute = AppAppStudentsIdEditRouteImport.update({
   path: '/edit',
   getParentRoute: () => AppAppStudentsIdRoute,
 } as any)
+const AppAppCasesIdEditRoute = AppAppCasesIdEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => AppAppCasesIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/app/dashboard': typeof AppAppDashboardRoute
-  '/app/cases/$id': typeof AppAppCasesIdRoute
+  '/app/cases/$id': typeof AppAppCasesIdRouteWithChildren
   '/app/cases/new': typeof AppAppCasesNewRoute
   '/app/students/$id': typeof AppAppStudentsIdRouteWithChildren
   '/app/students/new': typeof AppAppStudentsNewRoute
   '/app/cases/': typeof AppAppCasesIndexRoute
   '/app/students/': typeof AppAppStudentsIndexRoute
+  '/app/cases/$id/edit': typeof AppAppCasesIdEditRoute
   '/app/students/$id/edit': typeof AppAppStudentsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/app/dashboard': typeof AppAppDashboardRoute
-  '/app/cases/$id': typeof AppAppCasesIdRoute
+  '/app/cases/$id': typeof AppAppCasesIdRouteWithChildren
   '/app/cases/new': typeof AppAppCasesNewRoute
   '/app/students/$id': typeof AppAppStudentsIdRouteWithChildren
   '/app/students/new': typeof AppAppStudentsNewRoute
   '/app/cases': typeof AppAppCasesIndexRoute
   '/app/students': typeof AppAppStudentsIndexRoute
+  '/app/cases/$id/edit': typeof AppAppCasesIdEditRoute
   '/app/students/$id/edit': typeof AppAppStudentsIdEditRoute
 }
 export interface FileRoutesById {
@@ -106,12 +114,13 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/_app/app/dashboard': typeof AppAppDashboardRoute
-  '/_app/app/cases/$id': typeof AppAppCasesIdRoute
+  '/_app/app/cases/$id': typeof AppAppCasesIdRouteWithChildren
   '/_app/app/cases/new': typeof AppAppCasesNewRoute
   '/_app/app/students/$id': typeof AppAppStudentsIdRouteWithChildren
   '/_app/app/students/new': typeof AppAppStudentsNewRoute
   '/_app/app/cases/': typeof AppAppCasesIndexRoute
   '/_app/app/students/': typeof AppAppStudentsIndexRoute
+  '/_app/app/cases/$id/edit': typeof AppAppCasesIdEditRoute
   '/_app/app/students/$id/edit': typeof AppAppStudentsIdEditRoute
 }
 export interface FileRouteTypes {
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/app/students/new'
     | '/app/cases/'
     | '/app/students/'
+    | '/app/cases/$id/edit'
     | '/app/students/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/app/students/new'
     | '/app/cases'
     | '/app/students'
+    | '/app/cases/$id/edit'
     | '/app/students/$id/edit'
   id:
     | '__root__'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/_app/app/students/new'
     | '/_app/app/cases/'
     | '/_app/app/students/'
+    | '/_app/app/cases/$id/edit'
     | '/_app/app/students/$id/edit'
   fileRoutesById: FileRoutesById
 }
@@ -239,8 +251,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppStudentsIdEditRouteImport
       parentRoute: typeof AppAppStudentsIdRoute
     }
+    '/_app/app/cases/$id/edit': {
+      id: '/_app/app/cases/$id/edit'
+      path: '/edit'
+      fullPath: '/app/cases/$id/edit'
+      preLoaderRoute: typeof AppAppCasesIdEditRouteImport
+      parentRoute: typeof AppAppCasesIdRoute
+    }
   }
 }
+
+interface AppAppCasesIdRouteChildren {
+  AppAppCasesIdEditRoute: typeof AppAppCasesIdEditRoute
+}
+
+const AppAppCasesIdRouteChildren: AppAppCasesIdRouteChildren = {
+  AppAppCasesIdEditRoute: AppAppCasesIdEditRoute,
+}
+
+const AppAppCasesIdRouteWithChildren = AppAppCasesIdRoute._addFileChildren(
+  AppAppCasesIdRouteChildren,
+)
 
 interface AppAppStudentsIdRouteChildren {
   AppAppStudentsIdEditRoute: typeof AppAppStudentsIdEditRoute
@@ -255,7 +286,7 @@ const AppAppStudentsIdRouteWithChildren =
 
 interface AppRouteChildren {
   AppAppDashboardRoute: typeof AppAppDashboardRoute
-  AppAppCasesIdRoute: typeof AppAppCasesIdRoute
+  AppAppCasesIdRoute: typeof AppAppCasesIdRouteWithChildren
   AppAppCasesNewRoute: typeof AppAppCasesNewRoute
   AppAppStudentsIdRoute: typeof AppAppStudentsIdRouteWithChildren
   AppAppStudentsNewRoute: typeof AppAppStudentsNewRoute
@@ -265,7 +296,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAppDashboardRoute: AppAppDashboardRoute,
-  AppAppCasesIdRoute: AppAppCasesIdRoute,
+  AppAppCasesIdRoute: AppAppCasesIdRouteWithChildren,
   AppAppCasesNewRoute: AppAppCasesNewRoute,
   AppAppStudentsIdRoute: AppAppStudentsIdRouteWithChildren,
   AppAppStudentsNewRoute: AppAppStudentsNewRoute,
