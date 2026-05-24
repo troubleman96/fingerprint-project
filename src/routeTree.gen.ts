@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppAppReportsRouteImport } from './routes/_app.app.reports'
 import { Route as AppAppDashboardRouteImport } from './routes/_app.app.dashboard'
 import { Route as AppAppAuditRouteImport } from './routes/_app.app.audit'
+import { Route as AppAppUsersIndexRouteImport } from './routes/_app.app.users.index'
 import { Route as AppAppStudentsIndexRouteImport } from './routes/_app.app.students.index'
 import { Route as AppAppCasesIndexRouteImport } from './routes/_app.app.cases.index'
 import { Route as AppAppBiometricIndexRouteImport } from './routes/_app.app.biometric.index'
@@ -53,6 +54,11 @@ const AppAppDashboardRoute = AppAppDashboardRouteImport.update({
 const AppAppAuditRoute = AppAppAuditRouteImport.update({
   id: '/app/audit',
   path: '/app/audit',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAppUsersIndexRoute = AppAppUsersIndexRouteImport.update({
+  id: '/app/users/',
+  path: '/app/users/',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAppStudentsIndexRoute = AppAppStudentsIndexRouteImport.update({
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/app/biometric/': typeof AppAppBiometricIndexRoute
   '/app/cases/': typeof AppAppCasesIndexRoute
   '/app/students/': typeof AppAppStudentsIndexRoute
+  '/app/users/': typeof AppAppUsersIndexRoute
   '/app/cases/$id/edit': typeof AppAppCasesIdEditRoute
   '/app/students/$id/edit': typeof AppAppStudentsIdEditRoute
 }
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/app/biometric': typeof AppAppBiometricIndexRoute
   '/app/cases': typeof AppAppCasesIndexRoute
   '/app/students': typeof AppAppStudentsIndexRoute
+  '/app/users': typeof AppAppUsersIndexRoute
   '/app/cases/$id/edit': typeof AppAppCasesIdEditRoute
   '/app/students/$id/edit': typeof AppAppStudentsIdEditRoute
 }
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/_app/app/biometric/': typeof AppAppBiometricIndexRoute
   '/_app/app/cases/': typeof AppAppCasesIndexRoute
   '/_app/app/students/': typeof AppAppStudentsIndexRoute
+  '/_app/app/users/': typeof AppAppUsersIndexRoute
   '/_app/app/cases/$id/edit': typeof AppAppCasesIdEditRoute
   '/_app/app/students/$id/edit': typeof AppAppStudentsIdEditRoute
 }
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/app/biometric/'
     | '/app/cases/'
     | '/app/students/'
+    | '/app/users/'
     | '/app/cases/$id/edit'
     | '/app/students/$id/edit'
   fileRoutesByTo: FileRoutesByTo
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
     | '/app/biometric'
     | '/app/cases'
     | '/app/students'
+    | '/app/users'
     | '/app/cases/$id/edit'
     | '/app/students/$id/edit'
   id:
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/_app/app/biometric/'
     | '/_app/app/cases/'
     | '/_app/app/students/'
+    | '/_app/app/users/'
     | '/_app/app/cases/$id/edit'
     | '/_app/app/students/$id/edit'
   fileRoutesById: FileRoutesById
@@ -262,6 +274,13 @@ declare module '@tanstack/react-router' {
       path: '/app/audit'
       fullPath: '/app/audit'
       preLoaderRoute: typeof AppAppAuditRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/app/users/': {
+      id: '/_app/app/users/'
+      path: '/app/users'
+      fullPath: '/app/users/'
+      preLoaderRoute: typeof AppAppUsersIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/app/students/': {
@@ -372,6 +391,7 @@ interface AppRouteChildren {
   AppAppBiometricIndexRoute: typeof AppAppBiometricIndexRoute
   AppAppCasesIndexRoute: typeof AppAppCasesIndexRoute
   AppAppStudentsIndexRoute: typeof AppAppStudentsIndexRoute
+  AppAppUsersIndexRoute: typeof AppAppUsersIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -386,6 +406,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAppBiometricIndexRoute: AppAppBiometricIndexRoute,
   AppAppCasesIndexRoute: AppAppCasesIndexRoute,
   AppAppStudentsIndexRoute: AppAppStudentsIndexRoute,
+  AppAppUsersIndexRoute: AppAppUsersIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
