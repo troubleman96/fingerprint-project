@@ -1,0 +1,19 @@
+{
+  "name": "disciplinetrack-fingerprint-agent",
+  "version": "1.0.0",
+  "description": "Local bridge agent: connects a USB fingerprint scanner to the DisciplineTrack web app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:mock": "node index.js --mock"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.3",
+    "ws": "^8.16.0"
+  },
+  "optionalDependencies": {
+    "node-ffi-napi": "^4.0.3",
+    "ref-napi": "^3.0.3",
+    "ref-struct-di": "^1.1.1"
+  }
+}
