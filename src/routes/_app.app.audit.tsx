@@ -31,8 +31,8 @@ function AuditLogPage() {
       header: "User",
       render: (r) => (
         <div className="flex items-center gap-2">
-          <Avatar name={r.user_name} size={28} />
-          <span className="text-sm">{r.user_name}</span>
+          <Avatar name={r.user_name ?? "System"} size={28} />
+          <span className="text-sm">{r.user_name ?? <span className="text-muted-foreground italic">System</span>}</span>
         </div>
       ),
     },
@@ -45,12 +45,17 @@ function AuditLogPage() {
     {
       key: "resource_id",
       header: "Resource",
-      render: (r) => <span className="font-mono text-xs">{r.resource_type} · {r.resource_id}</span>,
+      render: (r) => (
+        <span className="font-mono text-xs">
+          {r.resource_type || "—"}
+          {r.resource_id ? <span className="text-muted-foreground"> · {r.resource_id}</span> : null}
+        </span>
+      ),
     },
     {
       key: "ip_address",
       header: "IP",
-      render: (r) => <span className="font-mono text-xs text-muted-foreground">{r.ip_address}</span>,
+      render: (r) => <span className="font-mono text-xs text-muted-foreground">{r.ip_address || "—"}</span>,
     },
   ];
 
